@@ -10,7 +10,7 @@
 
 .story-card {
   overflow-y: hidden;
-  height: 10vh;
+  height: 30vh;
 }
 
 #disabledRange::-webkit-slider-thumb {
