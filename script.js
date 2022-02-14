@@ -2,7 +2,6 @@ const startButton = document.querySelector("#startTest");
 let container = document.querySelector(".container");
 let inputs;
 let story;
-let currentStoryIndex = 0;
 let typingArea;
 let characterSpanElements;
 let lastValueIndex = 0;
@@ -36,6 +35,7 @@ function insertStory() {
   });
   document.querySelector("#storyText").innerHTML = stroyInnerHtml;
   characterSpanElements = document.querySelectorAll("span");
+  startTimer();
 }
 
 function startTest(container, time) {
@@ -58,9 +58,6 @@ function startTest(container, time) {
         style="opacity:0;"
         autocomplete="off"
       />
-      <button class="btn btn-outline-secondary" type="button">
-        <i class="fa-solid fa-repeat"></i>
-      </button>
     </div>`;
   typingArea = document.querySelector("#typingArea");
   typingArea.focus();
@@ -91,7 +88,6 @@ function userStartTyping() {
     characterSpanElements[lastValueIndex + 1].classList.remove("correct");
   }
   addCurrentClass(lastValueIndex + 1);
-  currentStoryIndex += 1;
   document.querySelector(".active").scrollIntoView();
 }
 
@@ -102,6 +98,26 @@ function addCurrentClass(index) {
   characterSpanElements[index + 1].classList.add("active");
 }
 
-function appendResults() {
+function startTimer() {
+  let currentTime = new Date().getTime();
+  let countDownDate = new Date(currentTime + inputs.time * 60 * 1000);
+  console.log(countDownDate);
+  let timer = setInterval(function () {
+    let now = new Date().getTime();
+    let timeLeft = countDownDate - now;
+    if (timeLeft < 0) {
+      clearInterval(timer);
+      showResults();
+    }
+    let minutesLeft = Math.floor(timeLeft / (60 * 1000));
+    // let secondsLeft = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    let secondsLeft = Math.floor(timeLeft / 1000 - minutesLeft * 60);
+    document.querySelector("#timer").innerText = `${minutesLeft}:${
+      secondsLeft < 10 ? "0" + secondsLeft : secondsLeft
+    }`;
+  }, 1000);
+}
+
+function showResults() {
   console.log("Result");
 }
