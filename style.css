@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.correct {
+  color: green;
+}
+
+.story-card {
+  overflow-y: hidden;
+  height: 10vh;
+}
+
+#disabledRange::-webkit-slider-thumb {
+  background-color: lightcoral;
+  height: 25px;
+  transition: all 1s;
+}
+
+.progress-bar {
+  font-size: 1.2rem;
+}
+
+#storyText {
+  word-spacing: 0.5rem;
+  font-size: 2rem;
+}
+
+.beginner-speed {
+  color: blue;
+}
+
+.veteran-speed {
+  color: green;
+}
+
+.hardcore-speed {
+  color: goldenrod;
+}
+.pro-speed {
+  color: red;
+}
+
+.incorrect {
+  background: lightcoral;
+  color: white;
+}
+
+.active {
+  animation: activeanimate 0.5s infinite alternate-reverse ease;
+}
+
+@keyframes activeanimate {
+  from {
+    border-bottom: none;
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+    border-bottom: 3px solid blue;
+  }
+}
