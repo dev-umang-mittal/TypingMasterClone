@@ -26,6 +26,7 @@ function getStory() {
     .then((data) => {
       story = data.story; //Divide the story into span elements
       insertStory();
+      addCurrentClass(0);
     });
 }
 
@@ -75,10 +76,6 @@ function backSpace(e) {
 }
 
 function userStartTyping() {
-  if (typingArea.value.length === 0) {
-    addCurrentClass(0);
-    return;
-  }
   lastValueIndex = typingArea.value.length - 1;
   //if last charcter of the input === index of story
   if (typingArea.value[lastValueIndex] === story[lastValueIndex]) {
@@ -108,6 +105,7 @@ function startTimer() {
     if (timeLeft < 0) {
       clearInterval(timer);
       showResults();
+      return;
     }
     let minutesLeft = Math.floor(timeLeft / (60 * 1000));
     // let secondsLeft = Math.floor((timeLeft % (1000 * 60)) / 1000);
