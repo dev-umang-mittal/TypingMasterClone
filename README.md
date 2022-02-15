@@ -17,4 +17,4 @@ https://shortstories-api.herokuapp.com/
 
 ### Results Page:
 
-[Currently in Development]
+![image](https://user-images.githubusercontent.com/99638732/154060179-64031963-120b-4549-85c0-c57f77ae602b.png)
