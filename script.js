@@ -5,6 +5,7 @@ let story;
 let typingArea;
 let characterSpanElements;
 let lastValueIndex = 0;
+let cpm = 0;
 
 startButton.addEventListener("click", () => {
   inputs = {
@@ -29,7 +30,7 @@ function getStory() {
 }
 
 function insertStory() {
-  let stroyInnerHtml = "";
+  let stroyInnerHtml = ""; //If user typed the story and time is still left.
   story.split("").forEach((element) => {
     stroyInnerHtml += `<span>${element}</span>`;
   });
@@ -82,13 +83,12 @@ function userStartTyping() {
   //if last charcter of the input === index of story
   if (typingArea.value[lastValueIndex] === story[lastValueIndex]) {
     characterSpanElements[lastValueIndex + 1].classList.add("correct");
-    characterSpanElements[lastValueIndex + 1].classList.remove("incorrect");
   } else {
     characterSpanElements[lastValueIndex + 1].classList.add("incorrect");
-    characterSpanElements[lastValueIndex + 1].classList.remove("correct");
   }
   addCurrentClass(lastValueIndex + 1);
   document.querySelector(".active").scrollIntoView();
+  cpm += 1;
 }
 
 function addCurrentClass(index) {
@@ -101,7 +101,7 @@ function addCurrentClass(index) {
 function startTimer() {
   let currentTime = new Date().getTime();
   let countDownDate = new Date(currentTime + inputs.time * 60 * 1000);
-  console.log(countDownDate);
+  // console.log(countDownDate);
   let timer = setInterval(function () {
     let now = new Date().getTime();
     let timeLeft = countDownDate - now;
@@ -118,6 +118,92 @@ function startTimer() {
   }, 1000);
 }
 
+function calculateLevel(netSpeed) {
+  if (netSpeed < 40) return "beginner";
+  if (netSpeed < 60) return "veteran";
+  if (netSpeed < 80) return "hardcore";
+  return "pro";
+}
+
 function showResults() {
-  console.log("Result");
+  let grossWordsPerMinute = cpm / 5 / inputs.time;
+  let netWordsPerMinute =
+    (cpm / 5 - document.querySelectorAll(".incorrect").length) / inputs.time;
+  container.innerHTML = `
+    <div class="card">
+    <h5 class="card-header">Your Results are here:</h5>
+    <div class="card-body">
+      <h5 class="card-title">
+        Your typing speed is of a <span class="${calculateLevel(
+          netWordsPerMinute
+        )}-speed">${calculateLevel(netWordsPerMinute)}</span>.
+      </h5>
+      <p class="card-text">Total Characters Typed: ${cpm}
+      <br />Gross Words Per Minute: ${grossWordsPerMinute}
+      <br />Net Words Per Minute: ${netWordsPerMinute}</p>
+      <input
+        type="range"
+        class="form-range"
+        id="disabledRange"
+        min="0"
+        max="160"
+        value="${netWordsPerMinute}"
+        style="pointer-events: none"
+      />
+      <div class="progress" style="position: relative; height: 30px">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          style="width: 25%"
+          aria-valuenow="15"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title="WPM<40"
+        >
+          Beginner
+        </div>
+        <div
+          class="progress-bar bg-success"
+          role="progressbar"
+          style="width: 35%"
+          aria-valuenow="15"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title="WPM<60"
+        >
+          Veteran
+        </div>
+        <div
+          class="progress-bar bg-warning"
+          role="progressbar"
+          style="width: 25%"
+          aria-valuenow="30"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title="WPM<80"
+        >
+          Hardcore
+        </div>
+        <div
+          class="progress-bar bg-danger"
+          role="progressbar"
+          style="width: 15%"
+          aria-valuenow="20"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title="Let's not talk about it"
+        >
+          Pro
+        </div>
+      </div>
+    </div>
+  </div>`;
 }
