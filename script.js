@@ -126,7 +126,7 @@ function calculateLevel(netSpeed) {
 function showResults() {
   let grossWordsPerMinute = cpm / 5 / inputs.time;
   let netWordsPerMinute =
-    (cpm / 5 - document.querySelectorAll(".incorrect").length) / inputs.time;
+    (cpm - document.querySelectorAll(".incorrect").length) / 5 / inputs.time;
   container.innerHTML = `
     <div class="card">
     <h5 class="card-header">Your Results are here:</h5>
