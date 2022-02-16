@@ -2,6 +2,12 @@
 
 Trying to recreate the Typing Master using HTML, CSS and JavaScript.
 
+### Live Demonstration
+
+> https://dev-umang-mittal.github.io/typing-master-clone/
+
+### API
+
 Fetches a Random Story for the typing test from:
 https://shortstories-api.herokuapp.com/
 
