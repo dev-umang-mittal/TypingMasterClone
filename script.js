@@ -124,6 +124,8 @@ function calculateLevel(netSpeed) {
 }
 
 function showResults() {
+  typingArea.removeEventListener("input", userStartTyping);
+  typingArea.removeEventListener("keydown", backSpace);
   let grossWordsPerMinute = cpm / 5 / inputs.time;
   let netWordsPerMinute =
     (cpm - document.querySelectorAll(".incorrect").length) / 5 / inputs.time;
